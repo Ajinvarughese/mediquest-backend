@@ -4,12 +4,13 @@ package com.project.mediquest.controller;
 import com.project.mediquest.entities.Patient;
 import com.project.mediquest.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/patients")
+@RequestMapping("/api/patient")
 public class PatientController {
     @Autowired
     private PatientService patientService;
@@ -18,7 +19,10 @@ public class PatientController {
     public Patient addPatient(@RequestBody Patient patient) {
         return patientService.savePatient(patient);
     }
-
+    @PostMapping("/login")
+    public ResponseEntity<Patient> loginPatient(@RequestBody Patient patient) {
+        return  ResponseEntity.ok(patientService.loginPatient(patient));
+    }
     @GetMapping
     public List<Patient> getAllPatients() {
         return patientService.getAllPatients();

@@ -3,6 +3,7 @@ package com.project.mediquest.service;
 
 import com.project.mediquest.entities.Patient;
 import com.project.mediquest.repository.PatientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,16 @@ public class PatientService {
         return patientRepository.findById(id).orElse(null);
     }
 
+    public Patient loginPatient(Patient patient) {
+        Patient existing = patientRepository.findByPhone(patient.getPhone())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: "+patient.getPhone()));
+        if(existing.getPhone().equals(patient.getPhone()) && existing.getPassword().equals(patient.getPassword())) {
+            return existing;
+        }
+        throw new IllegalArgumentException("User name or password is wrong");
+    }
+
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
-}
+    }
 }

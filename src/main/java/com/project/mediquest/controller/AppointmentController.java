@@ -1,14 +1,15 @@
 package com.project.mediquest.controller;
+import com.project.mediquest.dto.Availability;
 import com.project.mediquest.entities.Appointment;
 import com.project.mediquest.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/appointments")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/appointment")
 public class AppointmentController {
 
     @Autowired
@@ -23,6 +24,12 @@ public class AppointmentController {
     public List<Appointment> getAllAppointments() {
         return service.getAll();
     }
+
+    @PostMapping("/availability/{id}")
+    public ResponseEntity<Boolean> isAvailable(@PathVariable Long id, @RequestBody Availability availability) {
+        return ResponseEntity.ok(service.getAvailability(id, availability));
+    }
+
 
     @GetMapping("/doctor")
     public List<Appointment> getByDoctor(@RequestParam String doctorName) {

@@ -12,17 +12,18 @@ import java.time.LocalDate;
 @Builder
 public class Appointment {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String date;
+    private String time;
+    private String status;
 
-        private String patientName;
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
 
-        private LocalDate appointmentDate;
-
-        private String doctorName;
-
-        private String doctorCategory;
-
-        private String status; // e.g. "BOOKED", "COMPLETED", "CANCELLED"
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }
