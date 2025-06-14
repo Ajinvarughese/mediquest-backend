@@ -31,9 +31,9 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("/doctor")
-    public List<Appointment> getByDoctor(@RequestParam String doctorName) {
-        return service.getByDoctor(doctorName);
+    @GetMapping("/doctor/{id}")
+    public List<Appointment> getByDoctor(@PathVariable Long id) {
+        return service.getByDoctor(id);
     }
 
     @PutMapping("/{id}/status")

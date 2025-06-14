@@ -32,8 +32,8 @@ public class AppointmentService {
         return repository.findAll();
     }
 
-    public List<Appointment> getByDoctor(String doctorName) {
-        return repository.findByDoctorName(doctorName);
+    public List<Appointment> getByDoctor(Long id) {
+        return repository.findByDoctorId(id);
     }
 
     public Appointment updateStatus(Long id, String newStatus) {
@@ -51,6 +51,10 @@ public class AppointmentService {
         LocalTime requestedTime = LocalTime.parse(availability.getTime(), DateTimeFormatter.ISO_TIME); // e.g., "14:15"
 
         List<Appointment> appointments = doctor.getAppointments();
+
+        if(appointments.size() == 20) {
+            return false;
+        }
 
         for (Appointment appt : appointments) {
             // Parse appointment date and time

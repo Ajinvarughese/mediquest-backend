@@ -22,6 +22,7 @@ public class Doctor extends User {
         private Integer experience;
         private String fromTime;
         private String toTime;
+
         @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
         @JsonIgnore
         private List<Appointment> appointments;
