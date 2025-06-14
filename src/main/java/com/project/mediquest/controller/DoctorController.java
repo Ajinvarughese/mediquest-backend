@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/doctor")
 public class DoctorController {
-
     private final DoctorService doctorService;
     private final FileUpload fileUpload;
 

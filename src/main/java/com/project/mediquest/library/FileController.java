@@ -12,6 +12,7 @@ import org.springframework.core.io.UrlResource;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -28,8 +29,10 @@ public class FileController {
             throw new FileNotFoundException("File not found: " + filename);
         }
 
-        // Dynamically detect MIME type based on file extension
-        String contentType = determineContentType(filename);
+        String contentType = Files.probeContentType(file);
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
 
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
@@ -37,14 +40,6 @@ public class FileController {
             .body(resource);
     }
 
-    private String determineContentType(String filename) {
-        String ext = filename.toLowerCase();
-        if (ext.endsWith(".png")) return "image/png";
-        if (ext.endsWith(".jpg") || ext.endsWith(".jpeg")) return "image/jpeg";
-        if (ext.endsWith(".webp")) return "image/webp";
-        if (ext.endsWith(".gif")) return "image/gif";
-        return "application/octet-stream"; // fallback
-    }
 }
 
 
