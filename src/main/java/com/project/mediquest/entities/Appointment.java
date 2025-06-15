@@ -1,5 +1,6 @@
 package com.project.mediquest.entities;
 
+import com.project.mediquest.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class Appointment {
     private Long id;
     private String date;
     private String time;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")

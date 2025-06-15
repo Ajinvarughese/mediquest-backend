@@ -1,6 +1,7 @@
 package com.project.mediquest.controller;
 import com.project.mediquest.dto.Availability;
 import com.project.mediquest.entities.Appointment;
+import com.project.mediquest.enums.AppointmentStatus;
 import com.project.mediquest.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +26,15 @@ public class AppointmentController {
         return service.getAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Appointment>> getAppointmentByUser(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getAppointmentByUser(id));
+    }
+
     @PostMapping("/availability/{id}")
     public ResponseEntity<Boolean> isAvailable(@PathVariable Long id, @RequestBody Availability availability) {
         return ResponseEntity.ok(service.getAvailability(id, availability));
     }
-
 
     @GetMapping("/doctor/{id}")
     public List<Appointment> getByDoctor(@PathVariable Long id) {
@@ -37,7 +42,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}/status")
-    public Appointment updateStatus(@PathVariable Long id, @RequestParam String status) {
+    public Appointment updateStatus(@PathVariable Long id, @RequestParam AppointmentStatus status) {
         return service.updateStatus(id, status);
     }
 }

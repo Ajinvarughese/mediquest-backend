@@ -3,6 +3,7 @@ package com.project.mediquest.service;
 import com.project.mediquest.dto.Availability;
 import com.project.mediquest.entities.Appointment;
 import com.project.mediquest.entities.Doctor;
+import com.project.mediquest.enums.AppointmentStatus;
 import com.project.mediquest.repository.AppointmentRepository;
 import com.project.mediquest.repository.DoctorRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,7 +25,7 @@ public class AppointmentService {
     private final DoctorRepository doctorRepository;
 
     public Appointment book(Appointment appointment) {
-        appointment.setStatus("BOOKED");
+        appointment.setStatus(AppointmentStatus.BOOKED);
         return repository.save(appointment);
     }
 
@@ -36,10 +37,14 @@ public class AppointmentService {
         return repository.findByDoctorId(id);
     }
 
-    public Appointment updateStatus(Long id, String newStatus) {
+    public Appointment updateStatus(Long id, AppointmentStatus newStatus) {
         Appointment appointment = repository.findById(id).orElseThrow();
         appointment.setStatus(newStatus);
         return repository.save(appointment);
+    }
+
+    public List<Appointment> getAppointmentByUser(Long id) {
+        return repository.findByPatientId(id);
     }
 
     public Boolean getAvailability(Long id, Availability availability) {

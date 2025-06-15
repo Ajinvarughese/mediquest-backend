@@ -1,6 +1,7 @@
 package com.project.mediquest.entities;
 
 import com.project.mediquest.enums.ClaimType;
+import com.project.mediquest.enums.InsuranceStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +35,8 @@ public class InsuranceClaim {
 
         private String documentUrl;
 
-        private String status;
+        @Enumerated(EnumType.STRING)
+        private InsuranceStatus status;
 
         @CreationTimestamp
         @Column(nullable = false)

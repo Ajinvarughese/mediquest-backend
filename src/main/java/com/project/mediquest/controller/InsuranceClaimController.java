@@ -45,6 +45,11 @@ public class InsuranceClaimController {
         return insuranceClaimService.getClaimById(id);
     }
 
+    @GetMapping("/user/{phone}")
+    public ResponseEntity<List<InsuranceClaim>> getClaimByUser(@PathVariable String phone) {
+        return ResponseEntity.ok(insuranceClaimService.getClaimByUser(phone));
+    }
+
     @DeleteMapping("/{id}")
     public void deleteClaim(@PathVariable Long id) {
         insuranceClaimService.deleteClaim(id);
