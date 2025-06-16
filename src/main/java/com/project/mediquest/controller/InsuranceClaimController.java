@@ -1,6 +1,8 @@
 package com.project.mediquest.controller;
 
+import com.project.mediquest.dto.ClaimStatusDTO;
 import com.project.mediquest.entities.InsuranceClaim;
+import com.project.mediquest.enums.InsuranceStatus;
 import com.project.mediquest.library.FileUpload;
 import com.project.mediquest.service.InsuranceClaimService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,18 @@ public class InsuranceClaimController {
     @GetMapping("/user/{phone}")
     public ResponseEntity<List<InsuranceClaim>> getClaimByUser(@PathVariable String phone) {
         return ResponseEntity.ok(insuranceClaimService.getClaimByUser(phone));
+    }
+
+    @PutMapping
+    public ResponseEntity<InsuranceClaim> updateClaim(@RequestBody InsuranceClaim claim) {
+        return ResponseEntity.ok(insuranceClaimService.updateClaim(claim));
+    }
+
+    @PutMapping("/status")
+    public ResponseEntity<InsuranceClaim> updateStatus(@RequestBody ClaimStatusDTO status) {
+        return ResponseEntity.ok(insuranceClaimService.updateStatus(
+                status.getInsuranceClaim().getId(),
+                status.getStatus()));
     }
 
     @DeleteMapping("/{id}")

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,8 +25,6 @@ public class InsuranceClaim {
 
         private String patientId;
 
-        private String hospitalName;
-
         private ClaimType claimType;
 
         private BigDecimal amount;
@@ -35,8 +34,16 @@ public class InsuranceClaim {
 
         private String documentUrl;
 
+        private String providerId;
+
+        private String providerName;
+
+        private String treatmentCode;
+
         @Enumerated(EnumType.STRING)
         private InsuranceStatus status;
+
+        private String dateOfService;
 
         @CreationTimestamp
         @Column(nullable = false)
